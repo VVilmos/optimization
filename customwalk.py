@@ -1,8 +1,5 @@
-from docplex.mp.model import Model
 import random
 import math
-import pandas
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy 
 
@@ -18,7 +15,7 @@ fig, ax = plt.subplots()
 b = []
 users_x = numpy.array([])
 users_y = numpy.array([])
-for u in range(1):
+for u in range(2):
     x =  random.uniform(0 , 600)
     y = random.uniform(0 , 600)
     users_x = numpy.append(users_x, x)
@@ -41,7 +38,7 @@ def init_user():
 #the user moves in the direction of the last movement with 60% probability
 def randomwalk(list_x, list_y ):
     for i in range(30):
-        for u in range(1):
+        for u in range(2):
             phi = random.uniform(last_phi[u] - 0.25*math.pi, last_phi[u] + 0.25*math.pi)
             speed = random.randint(1, 100)
             phi = 0.4*phi + 0.6*last_phi[u]
@@ -56,8 +53,8 @@ def randomwalk(list_x, list_y ):
             numpy.clip(list_x, 0, 600, out=list_x)
             numpy.clip(list_y,0, 600, out=list_y)
             if (list_x[u] == 0 or list_x[u] == 600 or list_y[u] == 0 or list_y[u] == 590):
-                #last_phi[u] = random.uniform(0, 2*math.pi)
-                last_phi[u] += last_phi[u] + math.pi
+                last_phi[u] = random.uniform(0, 2*math.pi)
+                #last_phi[u] += last_phi[u] + math.pi
 
 
 
