@@ -114,14 +114,16 @@ def model_update(previous_state_y):
 
     return model, x, y, dy, dx
 
-#calculating the number of gNBs that are turned on or off after the last optimization
-def numberofswitching(solution, previous_state):
-    n = 0
-    for g in range(9):
-        if (solution[y[g]] != previous_state[g]):
-            n += 1
-    return n
 
+#calculating the number of user handovers after the last optimization
+def calculate_handovers(solution):
+    handovers = 0
+    for g in range(9):
+        for u in range(90):
+            if (solution[dx[g, u]] != 0):
+                handovers += 1
+                continue
+    return handovers
     
 
 
@@ -133,7 +135,7 @@ for k in range(3):
         model, x, y, dy, dx = model_update(previous_state_y=previous_state_y)
         model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + model.sum(switching_cost_weight*dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
         solution = model.solve()
-        db += numberofswitching(solution, previous_state_y)
+        db += calculate_handovers(solution)
         n.append(db)
         #updating the previous state of gNBs
         for g in range(9):
@@ -146,9 +148,9 @@ for k in range(3):
         plot(i)
 
 
-    ax.plot(n, label = 'Switching cost =' + str(switching_cost_weight))
+    ax.plot(n, label = 'Handover cost =' + str(handover_cost_weight))
 
-    switching_cost_weight += 100*(k+1)
+    handover_cost_weight += 100*(k+1)
     users_x = numpy.array([])
     users_y = numpy.array([])
     for u in range(90):
@@ -163,6 +165,6 @@ for k in range(3):
 
 plt.legend()
 plt.xlabel('Number of optimizations')
-plt.ylabel('Number of gNB switching')
+plt.ylabel('Number of handovers')
 plt.show()
 

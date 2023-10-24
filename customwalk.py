@@ -67,4 +67,5 @@ def plot(x1, y1, x2, y2, alfa):
 
 init_user()
 randomwalk(users_x, users_y )
+
 plt.show()
