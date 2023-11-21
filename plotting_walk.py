@@ -13,13 +13,13 @@ df = pandas.DataFrame()
 
 #reading the data from the csv file
 df = pandas.read_csv('predefinedwalk.csv')
-print(df.shape[0])
 #Location and energy cost of gNBs
 gNodes_x = [100, 300, 500, 100, 300, 500, 100, 300, 500]
 gNodes_y = [100, 100, 100, 300, 300, 300, 500, 500, 500]
-cost = [6,6,6,6,6,6,6,6,6]
+cost = [6,6,16,6,6,6,6,6,6]
 
 #Location of users is read from the csv file
+# bandwidth of users is randomly generated
 b = []
 users_x = numpy.array([])
 users_y = numpy.array([])
@@ -98,7 +98,7 @@ previous_state_x = [[]]
 for g in range(9):
     previous_state_y.append(0)
 
-#all users are associated with the first gNB at the beginnin
+#all users are associated with the first gNB at the beginning
 #fill the matrix with 0s
 for g in range(9):
     previous_state_x.append([])

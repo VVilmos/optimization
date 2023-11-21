@@ -133,6 +133,7 @@ for k in range(3):
         distance.clear()
         calculate_distance()
         model, x, y, dy, dx = model_update(previous_state_y=previous_state_y)
+        #objective function
         model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + model.sum(switching_cost_weight*dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
         solution = model.solve()
         db += calculate_handovers(solution)
@@ -150,7 +151,7 @@ for k in range(3):
 
     ax.plot(n, label = 'Handover cost =' + str(handover_cost_weight))
 
-    handover_cost_weight += 100*(k+1)
+    handover_cost_weight += 12*(k+1)
     users_x = numpy.array([])
     users_y = numpy.array([])
     for u in range(90):

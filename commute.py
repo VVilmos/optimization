@@ -17,7 +17,7 @@ w = 500
 #Location and energy cost of gNBs
 gNodes_x = [100, 300, 500, 100, 300, 500, 100, 300, 500]
 gNodes_y = [100, 100, 100, 300, 300, 300, 500, 500, 500]
-cost = [6,6,6,6,9,6,6,13,6]
+cost = [6,6,6,6,6,6,6,13,6]
 
 #Location of users is random
 b = []
@@ -45,7 +45,8 @@ def calculate_distance():
 
 last_speed = []
 last_phi = []
-#initializing the users' speed and direction with random values
+#initializing the users' speed with random values
+#their direction is random but with a bias towards the right upper quadrant
 def init_user():
     for u in range(90):
         phi = random.uniform(0, 0.5*math.pi)
