@@ -126,12 +126,12 @@ def numberofswitching(solution, previous_state):
 
 
 # running 3 sets of 100 optimizations with different switching cost weights
-for k in range(3):
+for switching_cost_weight in [0, 150, 400]:
     for i in range(1, 101):
         distance.clear()
         calculate_distance()
         model, x, y, dy, dx = model_update(previous_state_y=previous_state_y)
-        model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + model.sum(switching_cost_weight*dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
+        model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + switching_cost_weight*model.sum(dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
         solution = model.solve()
         db += numberofswitching(solution, previous_state_y)
         n.append(db)
@@ -148,7 +148,6 @@ for k in range(3):
 
     ax.plot(n, label = 'Switching cost =' + str(switching_cost_weight))
 
-    switching_cost_weight += 100*(k+1)
     users_x = numpy.array([])
     users_y = numpy.array([])
     for u in range(90):

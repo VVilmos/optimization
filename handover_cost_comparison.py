@@ -118,8 +118,8 @@ def model_update(previous_state_y):
 #calculating the number of user handovers after the last optimization
 def calculate_handovers(solution):
     handovers = 0
-    for g in range(9):
-        for u in range(90):
+    for u in range(90):
+        for g in range(9):
             if (solution[dx[g, u]] != 0):
                 handovers += 1
                 continue
@@ -128,13 +128,13 @@ def calculate_handovers(solution):
 
 
 # running 3 sets of 100 optimizations with different switching cost weights
-for k in range(3):
+for handover_cost_weight in [0, 50, 200]:
     for i in range(1, 101):
         distance.clear()
         calculate_distance()
         model, x, y, dy, dx = model_update(previous_state_y=previous_state_y)
         #objective function
-        model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + model.sum(switching_cost_weight*dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
+        model.minimize(model.sum(distance_weight*x[g, u]*distance[g][u] for g in range(9) for u in range(90)) + model.sum(power_cost_weight*y[g]*cost[g] for g in range(9)) + switching_cost_weight*model.sum(dy[g] for g in range(9)) + handover_cost_weight*model.sum(dx[g, u] for g in range(9) for u in range(90))/2)
         solution = model.solve()
         db += calculate_handovers(solution)
         n.append(db)
@@ -151,7 +151,6 @@ for k in range(3):
 
     ax.plot(n, label = 'Handover cost =' + str(handover_cost_weight))
 
-    handover_cost_weight += 12*(k+1)
     users_x = numpy.array([])
     users_y = numpy.array([])
     for u in range(90):
