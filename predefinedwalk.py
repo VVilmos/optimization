@@ -50,8 +50,14 @@ def randomwalk(list_x, list_y, df):
             last_phi[u] = phi
             np.clip(list_x, 0, 600, out=list_x)
             np.clip(list_y,0, 600, out=list_y)
-            if (list_x[u] == 0 or list_x[u] == 600 or list_y[u] == 0 or list_y[u] == 590):
-                last_phi[u] = random.uniform(0, 2*math.pi)
+            if (list_x[u] == 0):
+                last_phi[u] = random.uniform(0, math.pi)
+            if (list_x[u] == 600):
+                last_phi[u] = random.uniform(math.pi, 2*math.pi)
+            if (list_y[u] == 0):
+                last_phi[u] = random.uniform(-0.5*math.pi, 0.5*math.pi)
+            if (list_y[u] == 600):
+                last_phi[u] = random.uniform(0.5*math.pi, 1.5*math.pi)
             df.loc[i, 'user' + str(u) + '_x'] = list_x[u]
             df.loc[i, 'user' + str(u) + '_y'] = list_y[u]
         newlocation.clear()
