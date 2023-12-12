@@ -16,7 +16,7 @@ df = pandas.read_csv('predefinedwalk.csv')
 #Location and energy cost of gNBs
 gNodes_x = [100, 300, 500, 100, 300, 500, 100, 300, 500]
 gNodes_y = [100, 100, 100, 300, 300, 300, 500, 500, 500]
-cost = [6,6,16,6,6,6,6,6,6]
+cost = [6,6,6,6,6,6,6,6,6]
 
 #Location of users is read from the csv file
 # bandwidth of users is randomly generated
@@ -87,9 +87,9 @@ def plot(i):
 #modelling the problem
 model = Model(name = "connectingUEs")
 c = 150  #capacity of gNBs
-power_cost_weight = 5000
+power_cost_weight = 500
 switching_cost_weight = 1000
-handover_cost_weight = 100
+handover_cost_weight = 10
 distance_weight = 10
 
 

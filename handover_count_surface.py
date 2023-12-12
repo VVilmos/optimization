@@ -62,8 +62,8 @@ handover_cost_weight = 0
 previous_state_y = []
 previous_state_x = [[]]
 
-handover_cost_values = [0, 5, 10,15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135,  140, 145, 150, 155,  160, 165, 170, 175, 180, 185, 190, 195, 200]
-switching_cost_values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]
+handover_cost_values = [0, 5, 10,15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135,  140, 145, 150, 155,  160, 165, 170, 175, 180, 185, 190, 195 ]
+switching_cost_values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 ]
 
 n = []
 db = 0
@@ -171,6 +171,16 @@ for ho_cost in handover_cost_values:
 
 # Plot the surface with the calculated n values
 def surf_plot(ho_values, sw_values, n):
+
+    #writing the data into a csv file
+    df1 = pandas.DataFrame(ho_values)
+    df2 = pandas.DataFrame(sw_values)
+    df3 = pandas.DataFrame(n)
+
+    df1.to_csv('ho_values.csv', index=False, header=False)
+    df2.to_csv('sw_values.csv', index=False, header=False)
+    df3.to_csv('ho_result.csv', index=False, header=False)
+
     X,Y = numpy.meshgrid(ho_values, sw_values)
     Z = numpy.array(n).reshape(len(sw_values),len(ho_values))
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
