@@ -2,7 +2,7 @@ import random
 import math
 import matplotlib.pyplot as plt
 import numpy 
-
+from sklearn import linear_model
 
 list_x = numpy.array([])
 list_y = numpy.array([])
@@ -33,11 +33,20 @@ def init_user():
         last_phi.append(phi)
 
 
+last_position = [0, 0]
+def predict_next(x1, y1, x2, y2):
+    regressor = linear_model.LinearRegression()
+    x_train = numpy.array([x1, x2]).reshape(-1, 1)
+    y_train = numpy.array([y1, y2]).reshape(-1, 1)
+    regressor.fit(x_train, y_train)
+    next_x = x2 + x2-x1
+    next_y = regressor.predict(numpy.array([[x2 + x2-x1]]))
+    return next_y[0]
 
 #random walk mobility model
 #the user moves in the direction of the last movement with 60% probability
 def randomwalk(list_x, list_y ):
-    for i in range(30):
+    for i in range(10):
         for u in range(1):
             phi = random.uniform(last_phi[u] - 0.25*math.pi, last_phi[u] + 0.25*math.pi)
             speed = random.randint(1, 100)
@@ -51,8 +60,15 @@ def randomwalk(list_x, list_y ):
             last_phi[u] = phi
             numpy.clip(list_x, 0, 600, out=list_x)
             numpy.clip(list_y,0, 600, out=list_y)
+
+
             plot(prev_x, prev_y, list_x[u], list_y[u], 0.8-i/40)
-            
+            next_y = (predict_next(prev_x, prev_y, list_x[u], list_y[u]))
+            next_x = list_x[u] + list_x[u] - prev_x
+            #ax.plot([prev_x, next_x], [prev_y, next_y[0]], c='grey', linewidth=0.5, zorder=1)
+            ax.scatter(next_x, next_y[0], s=25, alpha = 0.8-i/40, c='b', zorder = 8, marker = '+')
+
+
             if (list_x[u] == 0):
                 last_phi[u] = random.uniform(0, math.pi)
             if (list_x[u] == 600):
@@ -68,8 +84,9 @@ def randomwalk(list_x, list_y ):
 def plot(x1, y1, x2, y2, alfa):
     plt.xlim(-30, 630)
     plt.ylim(-30, 630)
-    ax.arrow(x1 + (x2-x1)*0.1, y1 + (y2-y1)*0.1, (x2-x1) + (x1-x2)*0.3, (y2-y1) + (y1-y2)*0.3, head_width=10, head_length=5, fc='k', ec='k', alpha = alfa, zorder=0)
-    ax.scatter(x2,y2, s=25, alpha = alfa+0.1, c='r', zorder = 8, marker = '+')
+   # ax.arrow(x1 + (x2-x1)*0.1, y1 + (y2-y1)*0.1, (x2-x1) + (x1-x2)*0.3, (y2-y1) + (y1-y2)*0.3, head_width=10, head_length=5, fc='k', ec='k', alpha = alfa, zorder=0)
+    ax.scatter(x2,y2, s=25, alpha = alfa+0.1, c='r', zorder = 8, marker = 'o')
+    ax.plot([x1, x2], [y1, y2], c='grey', linewidth=0.5, zorder=1)
 
 init_user()
 randomwalk(users_x, users_y )

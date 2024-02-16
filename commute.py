@@ -63,8 +63,8 @@ def randomwalk(list_x, list_y):
         speed = random.randint(1, 40)
         phi = 0.4*phi + 0.6*last_phi[u]
         speed = 0.4*speed + 0.6*last_speed[u]
-        list_x[u] += speed*math.cos(phi)
-        list_y[u] += speed*math.sin(phi)
+        list_x[u] += speed*math.sin(phi)
+        list_y[u] += speed*math.cos(phi)
         last_speed[u] = speed
         last_phi[u] = phi
         numpy.clip(list_x, 10, 590, out=list_x)
