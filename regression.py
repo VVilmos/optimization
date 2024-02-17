@@ -31,6 +31,15 @@ def predict3(X, Y):
     y_train = np.array(Y).reshape(-1, 1)
     regressor.fit(x_train, y_train)
 
+    #predict the next point
+    next_x = X[-1] + (X[-1] - X[-2] + X[-2] - X[-3])/2
+    predict_x = np.array(next_x).reshape(-1, 1)
+    predict_x = poly.fit_transform(predict_x)
+    predict_y = regressor.predict(predict_x)
+    next_y = predict_y[0][0]
+    print(next_x, next_y)
+    ax.scatter(next_x, next_y, c='blue', alpha=1, zorder=10)
+
     #plotting the curve
     curve_x = np.linspace(X[0]-1, X[-1]+1, 20).reshape(-1, 1)
     curve_x_poly = poly.fit_transform(curve_x)
@@ -47,10 +56,18 @@ def predict2(X, Y):
     y_train = np.array(Y).reshape(-1, 1)
     regressor.fit(x_train, y_train)
 
+    #predict the next point
+    next_x = X[-1] + X[-1] - X[-2]
+    predict_x = np.array(next_x).reshape(-1, 1)
+    predict_y = regressor.predict(predict_x)
+    next_y = predict_y[0][0]
+    print(next_x, next_y)
+    ax.scatter(next_x, next_y, c='blue', alpha=1, zorder=10)
+
     #plotting the line
     line_x = np.linspace(X[0]-1, X[-1]+1, 20).reshape(-1, 1)
     line_y = regressor.predict(line_x)
-    ax.plot(line_x.ravel(), line_y.ravel(), c='blue', linewidth=0.5, zorder=1)
+    ax.plot(line_x.ravel(), line_y.ravel(), c='grey', linewidth=0.5, zorder=1)
 
 predict2(list_x[1:3], list_y[1:3])
 
@@ -63,6 +80,13 @@ def predict4(X, Y):
     y_train = np.array(Y).reshape(-1, 1)
     regressor.fit(x_train, y_train)
 
+    #predict the next point
+    next_x = X[-1] + (X[-1] - X[-2] + X[-2] - X[-3] + X[-3] - X[-4])/3
+    predict_x = np.array(next_x).reshape(-1, 1)
+    predict_x = poly.fit_transform(predict_x)
+    predict_y = regressor.predict(predict_x)
+    next_y = predict_y[0][0]
+    ax.scatter(next_x, next_y, c='blue', alpha=1, zorder=10)
     #plotting the curve
     curve_x = np.linspace(X[0]-1, X[-1]+1, 20).reshape(-1, 1)
     curve_x_poly = poly.fit_transform(curve_x)
