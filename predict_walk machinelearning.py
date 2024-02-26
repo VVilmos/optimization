@@ -2,7 +2,47 @@ import random
 import math
 import matplotlib.pyplot as plt
 import numpy 
+from sklearn  import tree
 from sklearn import linear_model
+import pandas
+import sklearn
+
+
+#training a decision tree model
+#creating regressor for x
+tree_regressor_x = tree.DecisionTreeRegressor()
+
+df = pandas.read_csv('train_x.csv')
+features = df[['prev_x', 'prev_y', 'phi', 'speed']]
+target_x = df['x']
+features_train, features_test, target_x_train, target_x_test = sklearn.model_selection.train_test_split(features, target_x, test_size=0.2, random_state=42)
+
+tree_regressor_x.fit(features_train, target_x_train)
+
+#create regressor for y
+tree_regressor_y = tree.DecisionTreeRegressor()
+df = pandas.read_csv('train_y.csv')
+features = df[['prev_x', 'prev_y', 'phi', 'speed']]
+target_y = df['y']
+features_train, features_test, target_y_train, target_y_test = sklearn.model_selection.train_test_split(features, target_y, test_size=0.2, random_state=42)
+
+tree_regressor_y.fit(features_train, target_y_train)
+
+#predict the next point
+
+def predict(prev_x, prev_y, phi, speed):
+    next_x = tree_regressor_x.predict([[prev_x, prev_y, phi, speed]])
+    print(next_x)
+    next_y = tree_regressor_y.predict([[prev_x, prev_y, phi, speed]])
+    print(next_y)
+    return next_x[0], next_y[0]
+
+
+
+
+
+
+
 
 def predict2(X, Y, ax ):
     #fitting the data to a linear regression model
@@ -68,7 +108,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
             ax.plot([prev_x, x], [prev_y, y], c='grey', linewidth=0.5, zorder=1)
             #difference between the predicted and the actual position
             if (i > 0): ax.plot([x, next_x], [y, next_y], c='red', linewidth=0.5, zorder=1)
-            next_x, next_y = predict2([prev_x, x], [prev_y, y], ax)
+            next_x, next_y = predict(prev_x, prev_y, last_phi, last_speed)
             if (i < 9): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
             plt.draw()
             plt.pause(0.5)
