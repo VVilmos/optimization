@@ -6,6 +6,12 @@ from sklearn import linear_model
 from sklearn.preprocessing import PolynomialFeatures
 
 def predict3(X, Y):
+    phi = math.atan2(X[-1] - X[-2], Y[-1] - Y[-2])
+    vertical = phi < 0.25*math.pi or phi > 1.75*math.pi or (0.75*math.pi < phi and phi < 1.25*math.pi)
+
+    if (vertical):
+            X, Y = Y, X
+
     #fitting the data to a polynomial regression model
     poly = PolynomialFeatures(degree=2)
     regressor = linear_model.LinearRegression()
@@ -27,6 +33,10 @@ def predict3(X, Y):
     curve_x_poly = poly.fit_transform(curve_x)
     curve_y = regressor.predict(curve_x_poly)
     #ax.plot(curve_x.ravel(), curve_y.ravel(), c='grey', linewidth=0.5, zorder=1)
+    
+    if (vertical):
+        next_x, next_y = next_y, next_x
+
     return next_x, next_y
 
 
@@ -51,7 +61,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
     prev_y = start_y
     pprev_x = start_x
     pprev_y = start_y
-    for i in range(10):
+    for i in range(30):
             phi = random.uniform(last_phi - 0.25*math.pi, last_phi + 0.25*math.pi)
             speed = random.randint(1, 100)
             phi = 0.4*phi + 0.6*last_phi
@@ -76,7 +86,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
             #difference between the predicted and the actual position
             if (i > 0): ax.plot([x, next_x], [y, next_y], c='red', linewidth=0.5, zorder=1)
             next_x, next_y = predict3([pprev_x, prev_x, x], [pprev_y, prev_y, y])
-            if (i < 9): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
+            if (i < 29): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
             #plt.draw()
             #plt.pause(2)
 

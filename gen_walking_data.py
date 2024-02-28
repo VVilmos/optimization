@@ -6,9 +6,9 @@ import pandas as pd
 
 
 #creating csv file to write rows
-df_x = pd.DataFrame(numpy.empty((100,5), dtype = float))
+df_x = pd.DataFrame(numpy.empty((9000,5), dtype = float))
 df_x.columns = ['prev_x', 'prev_y', 'phi', 'speed', 'x']
-df_y = pd.DataFrame(numpy.empty((100,5), dtype = float))
+df_y = pd.DataFrame(numpy.empty((9000,5), dtype = float))
 df_y.columns = ['prev_x', 'prev_y', 'phi', 'speed', 'y']
 
 
@@ -40,14 +40,14 @@ trainy_row = numpy.append(trainy_row, last_speed)
 def plot(x1, y1, x2, y2, alfa):
     plt.xlim(-300, 1000)
     plt.ylim(-300, 1000)
-    ax.arrow(x1 + (x2-x1)*0.1, y1 + (y2-y1)*0.1, (x2-x1) + (x1-x2)*0.3, (y2-y1) + (y1-y2)*0.3, head_width=10, head_length=5, fc='k', ec='k', alpha = alfa, zorder=0)
-    ax.scatter(x2,y2, s=25, alpha = alfa+0.1, c='r', zorder = 8, marker = '+')
+    #ax.arrow(x1 + (x2-x1)*0.1, y1 + (y2-y1)*0.1, (x2-x1) + (x1-x2)*0.3, (y2-y1) + (y1-y2)*0.3, head_width=10, head_length=5, fc='k', ec='k', alpha = alfa, zorder=0)
+    #ax.scatter(x2,y2, s=25, alpha = alfa+0.1, c='r', zorder = 8, marker = '+')
 
 
 
 #random walk mobility model
 #the user moves in the direction of the last movement with 60% probability
-for i in range(1000):
+for i in range(9000):
         phi = random.uniform(last_phi- 0.25*math.pi, last_phi+ 0.25*math.pi)
         speed = random.randint(1, 100)
         phi = 0.4*phi + 0.6*last_phi

@@ -5,6 +5,13 @@ import numpy
 from sklearn import linear_model
 
 def predict2(X, Y, ax ):
+
+    phi = math.atan2(X[1] - X[0], Y[1] - Y[0])
+    vertical = phi < 0.25*math.pi or phi > 1.75*math.pi or (0.75*math.pi < phi and phi < 1.25*math.pi)
+
+    if (vertical):
+         X, Y = Y, X
+
     #fitting the data to a linear regression model
     regressor = linear_model.LinearRegression()
     x_train = numpy.array(X).reshape(-1, 1)
@@ -23,6 +30,8 @@ def predict2(X, Y, ax ):
     line_y = regressor.predict(line_x)
     #ax.plot(line_x.ravel(), line_y.ravel(), c='grey', linewidth=0.5, zorder=1)
 
+    if (vertical):
+        next_x, next_y = next_y, next_x
     return next_x, next_y
 
 
@@ -69,7 +78,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
             #difference between the predicted and the actual position
             if (i > 0): ax.plot([x, next_x], [y, next_y], c='red', linewidth=0.5, zorder=1)
             next_x, next_y = predict2([prev_x, x], [prev_y, y], ax)
-            if (i < 9): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
+            if (i < 99): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
             plt.draw()
             plt.pause(0.5)
 
