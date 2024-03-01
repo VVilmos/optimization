@@ -26,7 +26,7 @@ def supportvector(features, target):
 
 def randomforest(features, target):
     features_train, features_test, target_train, target_test = sklearn.model_selection.train_test_split(features, target, test_size=0.2, random_state=42)
-    regressor = RandomForestRegressor(n_estimators=40, random_state=0)
+    regressor = RandomForestRegressor(n_estimators=50, random_state=0)
 
     #preproceccing???
     regressor.fit(features_train, target_train)
@@ -88,8 +88,8 @@ ax.scatter(user_x, user_y, c='r', alpha=1, zorder=10)
 def randomwalk(start_x, start_y, last_phi, last_speed):
     prev_x = start_x
     prev_y = start_y
-    regressor_x = lasso(features, target_x)
-    regressor_y = lasso(features, target_y)
+    regressor_x = randomforest(features, target_x)
+    regressor_y = randomforest(features, target_y)
     for i in range(100):
             phi = random.uniform(last_phi - 0.25*math.pi, last_phi + 0.25*math.pi)
             speed = random.randint(1, 120)
@@ -124,6 +124,6 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
             last_phi = phi
             prev_x = x
             prev_y = y
-#randomwalk(user_x, user_y, last_phi, last_speed)
+randomwalk(user_x, user_y, last_phi, last_speed)
 
 plt.show()

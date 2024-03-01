@@ -42,7 +42,7 @@ ax.set_ylim(-100, 700)
 #initializing the user position
 user_x = random.uniform(0, 600)
 user_y = random.uniform(0, 600)
-speed = random.randint(1, 70)
+speed = random.randint(1, 150)
 phi = random.uniform(0, 2*math.pi)
 last_phi = phi
 last_speed = speed
@@ -55,7 +55,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
     prev_y = start_y
     for i in range(100):
             phi = random.uniform(last_phi - 0.25*math.pi, last_phi + 0.25*math.pi)
-            speed = random.randint(1, 120)
+            speed = random.randint(1, 150)
             phi = 0.4*phi + 0.6*last_phi
             speed = 0.4*speed + 0.6*last_speed
             x = prev_x + speed*math.sin(phi)

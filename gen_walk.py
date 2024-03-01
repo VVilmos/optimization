@@ -3,13 +3,13 @@ import random
 import math
 import numpy
 
-filename = "walk_1.csv"
+filename = "walk_50.csv"
 df = pandas.DataFrame(numpy.empty((9000,2), dtype = float)) 
 df.columns = ['x', 'y']
 start_x = random.uniform(0 , 600)
 start_y = random.uniform(0 , 600)
 
-last_speed = random.randint(1, 70)
+last_speed = random.randint(1, 50)
 last_phi = random.uniform(0, 2*math.pi)
 
 def randomwalk(start_x, start_y, last_phi, last_speed):
@@ -17,7 +17,7 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
     prev_y = start_y
     for i in range(9000):
         phi = random.uniform(last_phi - 0.25*math.pi, last_phi + 0.25*math.pi)
-        speed = random.randint(1, 120)
+        speed = random.randint(1, 50)
         phi = 0.4*phi + 0.6*last_phi
         speed = 0.4*speed + 0.6*last_speed
         x = prev_x + speed*math.sin(phi)

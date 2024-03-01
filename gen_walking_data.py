@@ -29,7 +29,7 @@ trainy_row = numpy.append(trainy_row, y)
 ax.scatter(x, y, c='r', s=25, alpha=1, zorder = 10)
 
 phi = random.uniform(0, 2*math.pi)
-speed = random.randint(1, 70)
+speed = random.randint(1, 150)
 last_speed = speed
 last_phi = phi
 trainx_row = numpy.append(trainx_row, last_phi)
@@ -49,7 +49,7 @@ def plot(x1, y1, x2, y2, alfa):
 #the user moves in the direction of the last movement with 60% probability
 for i in range(9000):
         phi = random.uniform(last_phi- 0.25*math.pi, last_phi+ 0.25*math.pi)
-        speed = random.randint(1, 100)
+        speed = random.randint(1, 150)
         phi = 0.4*phi + 0.6*last_phi
         speed = 0.4*speed + 0.6*last_speed
         x = prev_x + speed*math.sin(phi)
@@ -86,7 +86,7 @@ for i in range(9000):
         trainy_row = numpy.append(trainy_row, last_speed)
 
 
-df_x.to_csv('train_x.csv', index = False)
-df_y.to_csv('train_y.csv', index = False)
+df_x.to_csv('train_x_150.csv', index = False)
+df_y.to_csv('train_y_150.csv', index = False)
 
 plt.show()

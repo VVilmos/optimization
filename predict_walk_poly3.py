@@ -9,7 +9,7 @@ def predict3(X, Y):
     phi = math.atan2(X[-1] - X[-2], Y[-1] - Y[-2])
     vertical = phi < 0.25*math.pi or phi > 1.75*math.pi or (0.75*math.pi < phi and phi < 1.25*math.pi)
 
-    if (vertical):
+    if (not vertical):
             X, Y = Y, X
 
     #fitting the data to a polynomial regression model
@@ -34,7 +34,7 @@ def predict3(X, Y):
     curve_y = regressor.predict(curve_x_poly)
     #ax.plot(curve_x.ravel(), curve_y.ravel(), c='grey', linewidth=0.5, zorder=1)
     
-    if (vertical):
+    if (not vertical):
         next_x, next_y = next_y, next_x
 
     return next_x, next_y
