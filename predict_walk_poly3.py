@@ -9,7 +9,7 @@ def predict3(X, Y):
     phi = math.atan2(X[-1] - X[-2], Y[-1] - Y[-2])
     vertical = phi < 0.25*math.pi or phi > 1.75*math.pi or (0.75*math.pi < phi and phi < 1.25*math.pi)
 
-    if (not vertical):
+    if (vertical):
             X, Y = Y, X
 
     #fitting the data to a polynomial regression model
@@ -34,7 +34,7 @@ def predict3(X, Y):
     curve_y = regressor.predict(curve_x_poly)
     #ax.plot(curve_x.ravel(), curve_y.ravel(), c='grey', linewidth=0.5, zorder=1)
     
-    if (not vertical):
+    if (vertical):
         next_x, next_y = next_y, next_x
 
     return next_x, next_y
@@ -87,8 +87,8 @@ def randomwalk(start_x, start_y, last_phi, last_speed):
             if (i > 0): ax.plot([x, next_x], [y, next_y], c='red', linewidth=0.5, zorder=1)
             next_x, next_y = predict3([pprev_x, prev_x, x], [pprev_y, prev_y, y])
             if (i < 29): ax.scatter(next_x, next_y, c='red', alpha=1, zorder=10, marker='x', s=9)
-            #plt.draw()
-            #plt.pause(2)
+            plt.draw()
+            plt.pause(0.5)
 
             #update for the next iteration
             last_speed = speed

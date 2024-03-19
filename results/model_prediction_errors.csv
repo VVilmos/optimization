@@ -1,0 +1,4 @@
+,linear,poly3,poly4,randomforest,decisiontree,lasso,supportvector
+"Sum of Euclidean distances between predicted and actual user positions, calculated for 3 different average user speeds","88,825.42","909,772.83","2,988,284.12","148,171.21","169,301.98","284,613.83","303,249.35"
+,"213,760.56","1,103,392.14","4,438,275.66","301,096.56","343,671.20","545,819.55","493,941.12"
+,"381,965.87","1,872,933.50","45,026,712.54","468,907.03","526,181.53","817,094.12","714,006.22"
